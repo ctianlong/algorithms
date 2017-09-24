@@ -2,6 +2,8 @@ package algorithm;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 import algorithm.sort.BubbleSort;
 
 /**
@@ -149,6 +151,24 @@ public class Other {
 			//x = x | (x + 1) 为数0的算法，同时修改循环条件;
 		}
 		return count;
+	}
+	
+	/**
+	 * 欧几里得算法
+	 * @param p
+	 * @param q
+	 * @return
+	 */
+	public static int gcd(int p, int q) {
+		System.out.println(p + " " + q);
+		if (q == 0) return p;
+		int r = p % q;
+		return gcd(q, r);
+	}
+	
+	@Test
+	public void testgcd(){
+		System.out.println(gcd(20, 35));
 	}
 
 
