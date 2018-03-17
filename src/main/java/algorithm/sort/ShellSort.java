@@ -18,9 +18,7 @@ public class ShellSort {
 					list[j + d] = list[j];
 					j -=d;
 				}
-				if(j + d != i){
-					list[j + d] = currentElem;
-				}
+				list[j + d] = currentElem;
 			}
 			d /=2;
 		}

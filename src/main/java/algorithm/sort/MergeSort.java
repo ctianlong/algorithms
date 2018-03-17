@@ -15,7 +15,7 @@ public class MergeSort {
 //		int i;
 		int s = 1;
 		while(s < n){
-			oneMerge(s, n, t, r);
+			oneMerge(s, n, r, t);
 			//在merge方法中已经实现从t复制回r中的操作，故此处不用下列操作
 //			for(i = 0; i < n; i++){
 //				r[i] = t[i];
@@ -38,11 +38,10 @@ public class MergeSort {
 		j = m + 1;
 		k = h - 1;
 		while((i <= m) && (j <= w)){
-			k++;
 			if(r[i] <= r[j])
-				t[k] = r[i++];
+				t[++k] = r[i++];
 			else 
-				t[k] = r[j++];
+				t[++k] = r[j++];
 		}
 //		if(i > m)
 //			while(j <= w)
@@ -74,7 +73,7 @@ public class MergeSort {
 	 * @param t
 	 * @param r
 	 */
-	private static void oneMerge(int s, int n, int[] t, int[] r){
+	private static void oneMerge(int s, int n, int[] r, int[] t){
 		int i = 0;
 		//两两归并长度为s的有序子表
 		while(i < (n - 2 * s + 1)){
@@ -90,9 +89,9 @@ public class MergeSort {
 	}
 	
 	public static void main(String[] args) {
-		int[] list = new int[10000];
+		int[] list = new int[100];
 		for (int i = 0; i < list.length; i++) {
-			list[i] = 10000 - i;
+			list[i] = 100 - i;
 		}
 
 		// 计算运行时间
@@ -100,9 +99,9 @@ public class MergeSort {
 
 		mergeSort(list, list.length);
 		// 遍历显示
-//		 for (int i = 0; i < list.length; i++) {
-//		 System.out.print(" " + list[i]);
-//		 }
+		 for (int i = 0; i < list.length; i++) {
+		 System.out.print(" " + list[i]);
+		 }
 		
 		long end = System.currentTimeMillis();
 		System.out.println("所花时间：" + (end - start));

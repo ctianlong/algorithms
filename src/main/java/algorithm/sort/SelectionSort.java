@@ -11,14 +11,13 @@ public class SelectionSort {
 	public static void selectionSort(int[] list, int n) {
 		int i,j,temp;
 		for (i = 0; i < n - 1; i++) {
-			int minIndex = i;
+			int minI = i;
 			for (j = i + 1; j < n; j++)
-				if (list[minIndex] > list[j]) {
-					minIndex = j;
-				}
-			if (minIndex != i) {
-				temp = list[minIndex];
-				list[minIndex] = list[i];
+				if (list[minI] > list[j])
+					minI = j;
+			if (minI != i) {
+				temp = list[minI];
+				list[minI] = list[i];
 				list[i] = temp;
 			}
 		}

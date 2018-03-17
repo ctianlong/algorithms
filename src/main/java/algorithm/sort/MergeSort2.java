@@ -9,16 +9,23 @@ package algorithm.sort;
  */
 public class MergeSort2 {
 
-	public static void mergeSort(int[] data, int left, int right) {
+	/**
+	 * 
+	 * @param data
+	 * @param left
+	 * @param right
+	 * @param t 辅助空间
+	 */
+	public static void mergeSort(int[] data, int left, int right, int[] t) {
 		if (left < right) {
 			// 找出中间索引
 			int center = (left + right) / 2;
 			// 对左边数组进行递归
-			mergeSort(data, left, center);
+			mergeSort(data, left, center, t);
 			// 对右边数组进行递归
-			mergeSort(data, center + 1, right);
+			mergeSort(data, center + 1, right, t);
 			// 合并
-			merge(data, left, center, right);
+			merge(data, left, center, right, t);
 		}
 	}
 
@@ -29,9 +36,9 @@ public class MergeSort2 {
 	 * @param center
 	 * @param right
 	 */
-	public static void merge(int[] data, int left, int center, int right) {
+	public static void merge(int[] data, int left, int center, int right, int[] tmpArr) {
 		//每调用一次都会new一个数组，空间花销大
-		int[] tmpArr = new int[data.length];
+//		int[] tmpArr = new int[data.length];
 		int mid = center + 1;
 		// third记录中间数组的索引
 		int third = left;
@@ -59,19 +66,19 @@ public class MergeSort2 {
 	}
 	
 	public static void main(String[] args) {
-		int[] list = new int[10000];
+		int[] list = new int[100];
 		for (int i = 0; i < list.length; i++) {
-			list[i] = 10000 - i;
+			list[i] = 100 - i;
 		}
 
 		// 计算运行时间
 		long start = System.currentTimeMillis();
 
-		mergeSort(list, 0, list.length - 1);
+		mergeSort(list, 0, list.length - 1, new int[100]);
 		// 遍历显示
-//		 for (int i = 0; i < list.length; i++) {
-//		 System.out.print(" " + list[i]);
-//		 }
+		 for (int i = 0; i < list.length; i++) {
+		 System.out.print(" " + list[i]);
+		 }
 		
 		long end = System.currentTimeMillis();
 		System.out.println("所花时间：" + (end - start));

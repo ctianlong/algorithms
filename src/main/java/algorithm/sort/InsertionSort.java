@@ -17,9 +17,7 @@ public class InsertionSort {
 				list[j + 1] = list[j];
 				j--;
 			}
-			if(j + 1 != i){
-				list[j + 1] = currentElem;
-			}
+			list[j + 1] = currentElem;
 		}
 	}
 	
