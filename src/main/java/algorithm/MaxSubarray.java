@@ -14,7 +14,7 @@ package algorithm;
 public class MaxSubarray {
 	
 	public static void main(String[] args) {
-		int[] arr = new int[]{1, -2, 3, 10, -4, 7, 2, -5};
+		int[] arr = new int[]{-2, 2, -1, -5, -9};
 		int result = findMaxSumOfSubarray(arr);
 		System.out.println(result);
 	}
@@ -23,13 +23,15 @@ public class MaxSubarray {
 		if (arr == null || arr.length == 0) {
 			return -1;
 		}
-		int maxSum = 0;
-		int tmp = maxSum;
+		int maxSum = Integer.MIN_VALUE;
+		int tmp = 0;
 		for (int i = 0; i < arr.length; i++) {
-			tmp += arr[i];
 			if (tmp <= 0) {
-				tmp = 0;
-			} else if (tmp > maxSum) {
+				tmp = arr[i];
+			} else {
+				tmp += arr[i];
+			}
+			if (tmp > maxSum) {
 				maxSum = tmp;
 			}
 		}
