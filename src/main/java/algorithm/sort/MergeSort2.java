@@ -65,6 +65,7 @@ public class MergeSort2 {
 		}
 	}
 	
+	
 	public static void main(String[] args) {
 		int[] list = new int[100];
 		for (int i = 0; i < list.length; i++) {

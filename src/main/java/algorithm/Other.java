@@ -147,8 +147,8 @@ public class Other {
 		int count = 0;
 		while(x != 0){
 			count++;
-			x = x & (x - 1);
-			//x = x | (x + 1) 为数0的算法，同时修改循环条件;
+			x = x & (x - 1); // 该操作能够将二进制表示中右起第一个1置为0
+			//x = x | (x + 1) 右起第一个0置为1，数0的算法，同时修改循环条件，
 		}
 		return count;
 	}

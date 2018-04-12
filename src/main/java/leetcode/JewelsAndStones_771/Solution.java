@@ -3,14 +3,10 @@ package leetcode.JewelsAndStones_771;
 import java.util.HashSet;
 import java.util.Set;
 
-import tool.TimeUtil;
-
 public class Solution {
 	
 	public static void main(String[] args) {
-		TimeUtil.startTiming();
 		System.out.println(new Solution().numJewelsInStones("aA", "aAAbbbb"));
-		TimeUtil.endTiming();
 	}
 	
 	public int numJewelsInStones(String J, String S) {
