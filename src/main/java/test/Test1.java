@@ -11,16 +11,19 @@ import org.junit.Test;
 public class Test1 {
 	
 	public static void main(String[] args) {
+		System.out.println(-757 == ~757 + 1);
+		System.out.println(Integer.MAX_VALUE);
+		System.out.println(Long.MAX_VALUE);
+		StringBuffer sb = new StringBuffer();
+		int[] arr = new int['z'];
 		System.out.println((long) Math.sqrt(4));
 		System.out.println((2 & 1) == 1);
 		System.out.println(Math.pow(0, -1)); // Infinity
 		System.out.println(-1 & 0xFF);
 		System.out.println(1 << -1);
-		System.out.println(Integer.MIN_VALUE);
 		int x = 2; int y = 3;
 		System.out.println((double) x / (double) y);
 		System.out.println(Integer.parseInt("00FF", 16));
-		System.out.println(Integer.MAX_VALUE);
 		Map<Integer, Integer> map = new TreeMap<>();
 		map.put(1, 3);
 		map.put(3, 5);
@@ -71,6 +74,47 @@ public class Test1 {
             }
         }
         System.out.println(Arrays.toString(array));
+	}
+	
+	@Test
+	public void test3() {
+		StringBuffer str = new StringBuffer("   ");
+		/*
+		 * 以下解法时间复杂度为O(n2)，从前往后替换，每次replace时都会将替换点之后的字符往后移，移动次数多 int i = 0; while (i <
+		 * str.length()) { if (' ' == str.charAt(i)) { str.replace(i, i + 1, "%20"); i =
+		 * i + 3; } else { i++; } } return str.toString();
+		 */
+		/* 采用从后往前替换，先遍历求出空格数，改变数组长度，再从后往前移，时间复杂度 O(n) */
+		int oldLen = str.length();
+		int spaceNum = 0;
+		for (int i = 0; i < oldLen; ++i) {
+			if (' ' == str.charAt(i))
+				++spaceNum;
+		}
+		int newLen = oldLen + 2 * spaceNum;
+		str.setLength(newLen);
+		int oldIndex = oldLen - 1;
+		int newIndex = newLen - 1;
+		while (oldIndex >= 0 && oldIndex < newIndex) {
+			if (str.charAt(oldIndex) == ' ') {
+				str.setCharAt(newIndex--, '0');
+				str.setCharAt(newIndex--, '2');
+				str.setCharAt(newIndex--, '%');
+			} else {
+				str.setCharAt(newIndex--, str.charAt(oldIndex));
+			}
+			--oldIndex;
+		}
+		System.out.println(str);
+	}
+	
+	@Test
+	public void test111() {
+		int n = 3;
+		int bit = 1;
+		while ((n = n / 10) != 0)
+			++bit;
+		System.out.println(bit);
 	}
 
 }

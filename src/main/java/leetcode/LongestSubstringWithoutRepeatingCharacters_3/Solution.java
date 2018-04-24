@@ -24,14 +24,14 @@ package leetcode.LongestSubstringWithoutRepeatingCharacters_3;
 public class Solution {
 
 	public static void main(String[] args) {
-		System.out.println(new Solution().lengthOfLongestSubstring("abcdesdfs"));
+		System.out.println(new Solution().lengthOfLongestSubstring("abbxscdesbxfs"));
 	}
 
 	public int lengthOfLongestSubstring(String s) {
 		char[] array = s.toCharArray();
 		int l = 0, m = 0;
 		int i, j;
-		for (i = 0; i < array.length; i++) {
+		for (i = 1; i < array.length; i++) {
 			char cur = array[i];
 			for (j = m; j < i; j++)
 				if (array[j] == cur) break;
@@ -40,6 +40,6 @@ public class Solution {
 				m = j + 1;
 			}
 		}
-		return i -m > l ? i -m : l;
+		return i - m > l ? i - m : l;
 	}
 }

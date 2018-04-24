@@ -22,7 +22,6 @@ public class Other {
 		// findSeveralMissingNumbers(severalMissingNumber);
 //		String string = "aaaabbbbddddcccc1111";
 //		maxTimes(string);
-		System.out.println(countBitOne(65530));
 	}
 
 	/**
@@ -138,20 +137,7 @@ public class Other {
 	}
 	
 	
-	/**
-	 * 统计二进制数中位1的个数
-	 * @param x
-	 * @return
-	 */
-	public static int countBitOne(int x){
-		int count = 0;
-		while(x != 0){
-			count++;
-			x = x & (x - 1); // 该操作能够将二进制表示中右起第一个1置为0
-			//x = x | (x + 1) 右起第一个0置为1，数0的算法，同时修改循环条件，
-		}
-		return count;
-	}
+	
 	
 	/**
 	 * 欧几里得算法
@@ -165,11 +151,5 @@ public class Other {
 		int r = p % q;
 		return gcd(q, r);
 	}
-	
-	@Test
-	public void testgcd(){
-		System.out.println(gcd(20, 35));
-	}
-
 
 }
