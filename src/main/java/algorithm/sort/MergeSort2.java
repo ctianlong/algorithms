@@ -10,59 +10,44 @@ package algorithm.sort;
 public class MergeSort2 {
 
 	/**
-	 * 
-	 * @param data
-	 * @param left
-	 * @param right
-	 * @param t 辅助空间
 	 */
-	public static void mergeSort(int[] data, int left, int right, int[] t) {
+	public static void mergeSort(int[] data, int[] copy, int left, int right) {
 		if (left < right) {
 			// 找出中间索引
 			int center = (left + right) / 2;
 			// 对左边数组进行递归
-			mergeSort(data, left, center, t);
+			mergeSort(data, copy, left, center);
 			// 对右边数组进行递归
-			mergeSort(data, center + 1, right, t);
+			mergeSort(data, copy, center + 1, right);
 			// 合并
-			merge(data, left, center, right, t);
+			merge(data, copy, left, center, right);
 		}
 	}
 
 	/**
 	 * 两路归并算法
-	 * @param data
-	 * @param left
-	 * @param center
-	 * @param right
 	 */
-	public static void merge(int[] data, int left, int center, int right, int[] tmpArr) {
-		//每调用一次都会new一个数组，空间花销大
-//		int[] tmpArr = new int[data.length];
-		int mid = center + 1;
-		// third记录中间数组的索引
-		int third = left;
-		int tmp = left;
-		while (left <= center && mid <= right) {
-			// 从两个数组中取出最小的放入中间数组
-			if (data[left] <= data[mid]) {
-				tmpArr[third++] = data[left++];
+	public static void merge(int[] data, int[] copy, int left, int center, int right) {
+		int i = left;
+		int j = center + 1;
+		int k = left; // 辅助数组索引
+		while (i <= center && j <= right) {
+			if (data[i] <= data[j]) { // 从两个数组中取出最小的放入中间数组
+				copy[k++] = data[i++];
 			} else {
-				tmpArr[third++] = data[mid++];
+				copy[k++] = data[j++];
 			}
 		}
 		// 剩余部分依次放入中间数组
-		while (mid <= right) {
-			tmpArr[third++] = data[mid++];
+		while (i <= center) {
+			copy[k++] = data[i++];
 		}
-		while (left <= center) {
-			tmpArr[third++] = data[left++];
+		while (j <= right) {
+			copy[k++] = data[j++];
 		}
 		// 将中间数组中的内容复制回原数组
-		while (tmp <= right) {
-			data[tmp] = tmpArr[tmp];
-			tmp++;
-		}
+		for (int e = left; e <= right; ++e)
+			data[e] = copy[e];
 	}
 	
 	
@@ -74,8 +59,9 @@ public class MergeSort2 {
 
 		// 计算运行时间
 		long start = System.currentTimeMillis();
-
-		mergeSort(list, 0, list.length - 1, new int[100]);
+		
+		int[] copy = new int[100];
+		mergeSort(list, copy, 0, list.length - 1);
 		// 遍历显示
 		 for (int i = 0; i < list.length; i++) {
 		 System.out.print(" " + list[i]);

@@ -18,7 +18,7 @@ public class QuanPailie {
 	
 	/*
 	 * n为字符数组的索引，输出从n开始的全排列
-	 * 思路：对n位置处，一次循环，将每个字符交换到n处，再对n-1位置开始的字符递归调用，直到数组最后一位，O(n!)
+	 * 思路：对n位置处，一次循环，将每个字符交换到n处，再对n+1位置开始的字符递归调用，直到数组最后一位，O(n!)
 	 */
 	public static void quanPaiLie(char[] str, int n) {
 		if (n == str.length - 1) {

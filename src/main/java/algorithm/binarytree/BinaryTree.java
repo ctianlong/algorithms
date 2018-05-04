@@ -5,15 +5,6 @@ import java.util.Deque;
 
 public class BinaryTree {
 
-	static class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-		public TreeNode(int val) {
-			this.val = val;
-		}
-	}
-	
 	public static void main(String[] args) {
 		BinaryTree tree = new BinaryTree();
 		int[] array = {13,65,5,97,25,0,37,22,0,4,28,0,0,32};
