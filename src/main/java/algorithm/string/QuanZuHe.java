@@ -12,7 +12,7 @@ package algorithm.string;
 public class QuanZuHe {
 	
 	public static void main(String[] args) {
-		char[] str = "abcd".toCharArray();
+		char[] str = "abckjh".toCharArray();
 		quanZuHe(str);
 		
 	}

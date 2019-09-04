@@ -11,6 +11,8 @@ import org.junit.Test;
 public class Test1 {
 	
 	public static void main(String[] args) {
+		int num = 8;
+		System.out.println(num & ~(num - 1));
 		System.out.println(-757 == ~757 + 1);
 		System.out.println(Integer.MAX_VALUE);
 		System.out.println(Long.MAX_VALUE);
