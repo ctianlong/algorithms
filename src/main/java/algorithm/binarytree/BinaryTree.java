@@ -67,7 +67,7 @@ public class BinaryTree {
 		}
 	}
 	
-	/*
+	/**
 	 * 广度优先遍历，非递归实现，采用队列
 	 */
 	public void bfs(TreeNode root) {
