@@ -2,7 +2,7 @@ package algorithm.sort;
 
 /**
  * 堆排序，一种树形选择排序，是对直接选择排序的有效改进。
- * 
+ * 不稳定
  * @author tianlong
  *
  */
