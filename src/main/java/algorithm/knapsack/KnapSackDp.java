@@ -22,7 +22,14 @@ package algorithm.knapsack;
  *  物品 A  B  C  D  E  F  G 
  *  重量(weight) 35 30 60 50 40 10 25 
  *  价值(value) 10 40 30 50 35 40 30 
- *  
+ *
+
+递归过程：有i个物品，背包的重量为w，C[i][w]为最优解
+C[i][w] =
+1) 0                                if i=0 or w=0
+2) C[i-1][w]                        if wi>w
+3) Max(vi+C[i-1][w-wi], C[i-1][w])  if wi<=w and i>0
+
 */
 public class KnapSackDp {
 	public static void main(String[] args) {

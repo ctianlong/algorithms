@@ -2,6 +2,7 @@ package algorithm.sort;
 
 /**
  * 直接选择排序法，升序
+ * 不稳定
  * 
  * @author tianlong
  *

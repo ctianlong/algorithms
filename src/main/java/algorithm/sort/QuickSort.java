@@ -2,7 +2,8 @@ package algorithm.sort;
 
 
 /**
- * 快速排序，对冒泡排序的改进，找基准值，递归，不稳定
+ * 快速排序，对冒泡排序的改进，找基准值，递归，
+ * 不稳定
  * @author tianlong
  *
  */
@@ -15,8 +16,8 @@ public class QuickSort {
 			int pivotIndex = (low + high) / 2; // 此处模拟随机，采用取中间值作为基准值
 //			int pivotIndex = low; // 若采用头或尾元素作为基准值，则容易出现最坏情况
 			/* partition操作，两种 */
-//			int pivotNewIndex = partition1(list, low, high, pivotIndex);
-			int pivotNewIndex = partition2(list, low, high, pivotIndex);
+			int pivotNewIndex = partition1(list, low, high, pivotIndex);
+//			int pivotNewIndex = partition2(list, low, high, pivotIndex);
 			/* 递归调用 */
 			quickSort(list, low, pivotNewIndex - 1);
 			quickSort(list, pivotNewIndex + 1, high);
@@ -85,13 +86,41 @@ public class QuickSort {
 		}
 		// 计算运行时间
 		long start = System.currentTimeMillis();
-		quickSort(list, 0, list.length - 1);
+		exam(list, 0, list.length - 1);
 		long end = System.currentTimeMillis();
 		// 遍历显示
-//		for (int i = 0; i < list.length; i++) {
-//			System.out.print(" " + list[i]);
-//		}
+		for (int i = 0; i < list.length; i++) {
+			System.out.print(" " + list[i]);
+		}
 		System.out.println("\n所花时间ms：" + (end - start));
+	}
+
+
+	public static void exam(int[] list, int low, int high) {
+		if (low < high) {
+			int pivotIndex = (low + high) / 2; // 随机比较好
+			swap(list, pivotIndex, low);
+			int i = low;
+			int j = high;
+			int pivotValue = list[low];
+			while (i < j) {
+				while (i < j && list[j] >= pivotValue)
+					j--;
+				if (i < j) {
+					list[i] = list[j];
+					i++;
+				}
+				while (i < j && list[i] <= pivotValue)
+					i++;
+				if (i < j) {
+					list[j] = list[i];
+					j--;
+				}
+			}
+			list[i] = pivotValue;
+			exam(list, low, i -1);
+			exam(list, i + 1, high);
+		}
 	}
 
 }

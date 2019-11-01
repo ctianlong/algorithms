@@ -2,6 +2,7 @@ package algorithm.sort;
 
 /**
  * 改进的冒泡算法，升序
+ * 稳定
  * @author tianlong
  *
  */

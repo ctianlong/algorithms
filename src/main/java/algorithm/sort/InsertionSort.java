@@ -2,6 +2,7 @@ package algorithm.sort;
 
 /**
  * 直接插入排序，升序
+ * 稳定
  * 
  * @author tianlong
  *
