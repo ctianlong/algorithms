@@ -45,7 +45,7 @@
 //
 // Related Topics数组 | 哈希表 
 //
-// 👍 17868, 👎 0bug 反馈 | 使用指南 | 更多配套插件 
+// 👍 18514, 👎 0bug 反馈 | 使用指南 | 更多配套插件 
 //
 //
 //
@@ -54,9 +54,9 @@
 
 package lchelper.leetcode.editor.cn;
 
-
-import java.util.Arrays;
 import java.util.HashMap;
+
+public class TwoSum_1 {
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -76,11 +76,9 @@ class Solution {
 //leetcode submit region end(Prohibit modification and deletion)
 
 
-public class TwoSum {
-
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(Arrays.toString(solution.twoSum(new int[]{2, 7, 11, 15}, 9)));;
+        Solution solution = new TwoSum_1().new Solution();
+    
     }
-
+    
 }

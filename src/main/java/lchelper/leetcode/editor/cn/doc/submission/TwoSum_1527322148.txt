@@ -13,5 +13,5 @@ class Solution {
     }
 }
 
-//runtime:1 ms
-//memory:42.6 MB
+//runtime:2 ms
+//memory:44 MB
