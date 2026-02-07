@@ -1,0 +1,62 @@
+> Problem: [1352. 最后 K 个数的乘积](https://leetcode.cn/problems/product-of-the-last-k-numbers/description/)
+
+[TOC]
+
+# 法一：暴力求积
+
+# 思路
+
+python暴力通过了。
+
+# Code
+
+Python均一行实现：
+
+时间6424 ms击败5.66%；内存29.9 MB击败34.91%
+
+* []
+
+```Python
+class ProductOfNumbers:
+    def __init__(self):
+        self.lst = []
+
+    def add(self, num: int) -> None:
+        self.lst.append(num)
+
+    def getProduct(self, k: int) -> int:
+        return prod(self.lst[-k:])
+```
+
+# 法二：前缀求积
+
+# 思路
+
+前缀思维，维护前缀积列表。
+
+# Code
+
+时间204 ms击败33.2%；内存29.7 MB击败61.32%
+
+* []
+
+```Python
+class ProductOfNumbers:
+    def __init__(self):
+        self.prelst, self.prelen = [1], 1
+
+    def add(self, num: int) -> None:
+        if num:
+            self.prelst.append(self.prelst[-1] * num)
+            self.prelen += 1
+        else:
+            self.prelst, self.prelen = [1], 1            
+
+    def getProduct(self, k: int) -> int:
+        return self.prelst[-1] // self.prelst[- 1 - k] if k < self.prelen else 0
+```
+
+**您若还有不同方法，欢迎贴在评论区，一起交流探讨！ ^_^**
+
+**↓ 点个赞，点收藏，留个言，再划走，感谢您支持作者！ ^_^**
+

@@ -1,0 +1,394 @@
+$\textit{answer}[i]$ 等于 $\textit{nums}$ 中除了 $\textit{nums}[i]$ 之外其余各元素的乘积。换句话说，如果知道了 $i$ 左边所有数的乘积，以及 $i$ 右边所有数的乘积，就可以算出 $\textit{answer}[i]$。
+
+于是：
+
+- 定义 $\textit{pre}[i]$ 表示从 $\textit{nums}[0]$ 到 $\textit{nums}[i-1]$ 的乘积。
+- 定义 $\textit{suf}[i]$ 表示从 $\textit{nums}[i+1]$ 到 $\textit{nums}[n-1]$ 的乘积。
+
+我们可以先计算出从 $\textit{nums}[0]$ 到 $\textit{nums}[i-2]$ 的乘积 $\textit{pre}[i-1]$，再乘上 $\textit{nums}[i-1]$，就得到了 $\textit{pre}[i]$，即
+
+$$
+\textit{pre}[i] = \textit{pre}[i-1] \cdot \textit{nums}[i-1]
+$$
+
+同理有
+
+$$
+\textit{suf}[i] = \textit{suf}[i+1] \cdot \textit{nums}[i+1]
+$$
+
+初始值：$\textit{pre}[0] = \textit{suf}[n-1] = 1$。按照上文的定义，$\textit{pre}[0]$ 和 $\textit{suf}[n-1]$ 都是**空子数组**的元素乘积，我们规定这是 $1$，因为 $1$ 乘以任何数 $x$ 都等于 $x$，这样可以方便递推计算 $\textit{pre}[1]$，$\textit{suf}[n-2]$ 等。
+
+算出 $\textit{pre}$ 数组和 $\textit{suf}$ 数组后，有
+
+$$
+\textit{answer}[i] = \textit{pre}[i] \cdot \textit{suf}[i]
+$$
+
+## 优化前
+
+* [sol-Python3]
+
+```py
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        pre = [1] * n
+        for i in range(1, n):
+            pre[i] = pre[i - 1] * nums[i - 1]
+
+        suf = [1] * n
+        for i in range(n - 2, -1, -1):
+            suf[i] = suf[i + 1] * nums[i + 1]
+
+        return [p * s for p, s in zip(pre, suf)]
+```
+
+* [sol-Java]
+
+```java
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] pre = new int[n];
+        pre[0] = 1;
+        for (int i = 1; i < n; i++) {
+            pre[i] = pre[i - 1] * nums[i - 1];
+        }
+
+        int[] suf = new int[n];
+        suf[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            ans[i] = pre[i] * suf[i];
+        }
+        return ans;
+    }
+}
+```
+
+* [sol-C++]
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> pre(n, 1);
+        for (int i = 1; i < n; i++) {
+            pre[i] = pre[i - 1] * nums[i - 1];
+        }
+
+        vector<int> suf(n, 1);
+        for (int i = n - 2; i >= 0; i--) {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        vector<int> ans(n);
+        for (int i = 0; i < n; i++) {
+            ans[i] = pre[i] * suf[i];
+        }
+        return ans;
+    }
+};
+```
+
+* [sol-C]
+
+```c
+int* productExceptSelf(int* nums, int numsSize, int* returnSize) {
+    int* pre = malloc(numsSize * sizeof(int));
+    pre[0] = 1;
+    for (int i = 1; i < numsSize; i++) {
+        pre[i] = pre[i - 1] * nums[i - 1];
+    }
+
+    int* suf = malloc(numsSize * sizeof(int));
+    suf[numsSize - 1] = 1;
+    for (int i = numsSize - 2; i >= 0; i--) {
+        suf[i] = suf[i + 1] * nums[i + 1];
+    }
+
+    int* ans = malloc(numsSize * sizeof(int));
+    *returnSize = numsSize;
+    for (int i = 0; i < numsSize; i++) {
+        ans[i] = pre[i] * suf[i];
+    }
+
+    free(pre);
+    free(suf);
+    return ans;
+}
+```
+
+* [sol-Go]
+
+```go
+func productExceptSelf(nums []int) []int {
+    n := len(nums)
+    pre := make([]int, n)
+    pre[0] = 1
+    for i := 1; i < n; i++ {
+        pre[i] = pre[i-1] * nums[i-1]
+    }
+
+    suf := make([]int, n)
+    suf[n-1] = 1
+    for i := n - 2; i >= 0; i-- {
+        suf[i] = suf[i+1] * nums[i+1]
+    }
+
+    ans := make([]int, n)
+    for i, p := range pre {
+        ans[i] = p * suf[i]
+    }
+    return ans
+}
+```
+
+* [sol-JavaScript]
+
+```js
+var productExceptSelf = function(nums) {
+    const n = nums.length;
+    const pre = Array(n);
+    pre[0] = 1;
+    for (let i = 1; i < n; i++) {
+        pre[i] = pre[i - 1] * nums[i - 1];
+    }
+
+    const suf = Array(n);
+    suf[n - 1] = 1;
+    for (let i = n - 2; i >= 0; i--) {
+        suf[i] = suf[i + 1] * nums[i + 1];
+    }
+
+    const ans = Array(n);
+    for (let i = 0; i < n; i++) {
+        ans[i] = pre[i] * suf[i];
+    }
+    return ans;
+};
+```
+
+* [sol-Rust]
+
+```rust
+impl Solution {
+    pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+        let n = nums.len();
+        let mut pre = vec![1; n];
+        for i in 1..n {
+            pre[i] = pre[i - 1] * nums[i - 1];
+        }
+
+        let mut suf = vec![1; n];
+        for i in (0..n - 1).rev() {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        pre.iter().zip(suf.iter()).map(|(&p, &s)| p * s).collect()
+    }
+}
+```
+
+#### 复杂度分析
+
+- 时间复杂度：$\mathcal{O}(n)$，其中 $n$ 是 $\textit{nums}$ 的长度。
+- 空间复杂度：$\mathcal{O}(n)$。
+
+## 优化：不使用额外空间
+
+先计算 $\textit{suf}$，然后一边计算 $\textit{pre}$，一边把 $\textit{pre}$ 直接乘到 $\textit{suf}[i]$ 中。最后返回 $\textit{suf}$。
+
+题目说「输出数组不被视为额外空间」，所以该做法的空间复杂度为 $\mathcal{O}(1)$。此外，这种做法比上面少遍历了一次。
+
+* [sol-Python3]
+
+```py
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        suf = [1] * n
+        for i in range(n - 2, -1, -1):
+            suf[i] = suf[i + 1] * nums[i + 1]
+
+        pre = 1
+        for i, x in enumerate(nums):
+            # 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+            suf[i] *= pre
+            pre *= x
+
+        return suf
+```
+
+* [sol-Java]
+
+```java
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] suf = new int[n];
+        suf[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        int pre = 1;
+        for (int i = 0; i < n; i++) {
+            // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+            suf[i] *= pre;
+            pre *= nums[i];
+        }
+
+        return suf;
+    }
+}
+```
+
+* [sol-C++]
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> suf(n);
+        suf[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        int pre = 1;
+        for (int i = 0; i < n; i++) {
+            // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+            suf[i] *= pre;
+            pre *= nums[i];
+        }
+
+        return suf;
+    }
+};
+```
+
+* [sol-C]
+
+```c
+int* productExceptSelf(int* nums, int numsSize, int* returnSize) {
+    int* suf = malloc(numsSize * sizeof(int));
+    suf[numsSize - 1] = 1;
+    for (int i = numsSize - 2; i >= 0; i--) {
+        suf[i] = suf[i + 1] * nums[i + 1];
+    }
+
+    int pre = 1;
+    for (int i = 0; i < numsSize; i++) {
+        // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+        suf[i] *= pre;
+        pre *= nums[i];
+    }
+
+    *returnSize = numsSize;
+    return suf;
+}
+```
+
+* [sol-Go]
+
+```go
+func productExceptSelf(nums []int) []int {
+    n := len(nums)
+    suf := make([]int, n)
+    suf[n-1] = 1
+    for i := n - 2; i >= 0; i-- {
+        suf[i] = suf[i+1] * nums[i+1]
+    }
+
+    pre := 1
+    for i, x := range nums {
+        // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+        suf[i] *= pre
+        pre *= x
+    }
+
+    return suf
+}
+```
+
+* [sol-JavaScript]
+
+```js
+var productExceptSelf = function(nums) {
+    const n = nums.length;
+    const suf = Array(n);
+    suf[n - 1] = 1;
+    for (let i = n - 2; i >= 0; i--) {
+        suf[i] = suf[i + 1] * nums[i + 1];
+    }
+
+    let pre = 1;
+    for (let i = 0; i < n; i++) {
+        // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+        suf[i] *= pre;
+        pre *= nums[i];
+    }
+
+    return suf;
+};
+```
+
+* [sol-Rust]
+
+```rust
+impl Solution {
+    pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+        let n = nums.len();
+        let mut suf = vec![0; n];
+        suf[n - 1] = 1;
+        for i in (0..n - 1).rev() {
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        let mut pre = 1;
+        for (i, x) in nums.iter().enumerate() {
+            // 此时 pre 为 nums[0] 到 nums[i-1] 的乘积，直接乘到 suf[i] 中
+            suf[i] *= pre;
+            pre *= x;
+        }
+
+        suf
+    }
+}
+```
+
+#### 复杂度分析
+
+- 时间复杂度：$\mathcal{O}(n)$，其中 $n$ 是 $\textit{nums}$ 的长度。
+- 空间复杂度：$\mathcal{O}(1)$。返回值不计入。
+
+更多相似题目，见下面动态规划题单中的「**专题：前后缀分解**」。
+
+## 分类题单
+
+[如何科学刷题？](https://leetcode.cn/circle/discuss/RvFUtj/)
+
+1. [滑动窗口与双指针（定长/不定长/单序列/双序列/三指针/分组循环）](https://leetcode.cn/circle/discuss/0viNMK/)
+2. [二分算法（二分答案/最小化最大值/最大化最小值/第K小）](https://leetcode.cn/circle/discuss/SqopEo/)
+3. [单调栈（基础/矩形面积/贡献法/最小字典序）](https://leetcode.cn/circle/discuss/9oZFK9/)
+4. [网格图（DFS/BFS/综合应用）](https://leetcode.cn/circle/discuss/YiXPXW/)
+5. [位运算（基础/性质/拆位/试填/恒等式/思维）](https://leetcode.cn/circle/discuss/dHn9Vk/)
+6. [图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）](https://leetcode.cn/circle/discuss/01LUak/)
+7. 【本题相关】[动态规划（入门/背包/状态机/划分/区间/状压/数位/数据结构优化/树形/博弈/概率期望）](https://leetcode.cn/circle/discuss/tXLS3i/)
+8. [常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）](https://leetcode.cn/circle/discuss/mOr1u6/)
+9. [数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）](https://leetcode.cn/circle/discuss/IYT3ss/)
+10. [贪心与思维（基本贪心策略/反悔/区间/字典序/数学/思维/脑筋急转弯/构造）](https://leetcode.cn/circle/discuss/g6KTKL/)
+11. [链表、二叉树与回溯（前后指针/快慢指针/DFS/BFS/直径/LCA/一般树）](https://leetcode.cn/circle/discuss/K0n2gO/)
+12. [字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）](https://leetcode.cn/circle/discuss/SJFwQI/)
+
+[我的题解精选（已分类）](https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/SOLUTIONS.md)
+
+欢迎关注 [B站@灵茶山艾府](https://space.bilibili.com/206214)
